@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 @RestController
@@ -29,9 +31,16 @@ public class TurmaController {
 	
 	@PostMapping(value = "/cadastrar")
 	public ResponseEntity<?> cadastrar(@RequestBody @Valid TurmaDTO dto, UriComponentsBuilder builder) {
-		logger.info("");
+		logger.info("Chegou no método cadastrar");
 		Turma turma = dto.toModel();
 
+		Optional<Turma> turmaOptionalNome = repository.findByNome(turma.getNome());
+		Optional<Turma> turmaOptionalIniciaEm = repository.findByIniciaEm(turma.getIniciaEm());
+		
+		if (turmaOptional.isPresent() ) {
+			return ResponseEntity.badRequest().build();
+		}
+		
 		repository.save(turma);
 		return ResponseEntity.ok().build();
 	}
