@@ -2,6 +2,7 @@ package br.com.zupedu.dojo.ot4dojo.controller;
 
 import br.com.zupedu.dojo.ot4dojo.model.Turma;
 import br.com.zupedu.dojo.ot4dojo.model.TurmaDTO;
+import br.com.zupedu.dojo.ot4dojo.model.TurmaDTOResponse;
 import br.com.zupedu.dojo.ot4dojo.repository.TurmaRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +44,7 @@ public class TurmaController {
 		
 		repository.save(turma);
 		return ResponseEntity.created(builder
-				.path("/turma/{id}").buildAndExpand(turma.getId()).toUri()).body(turma);
+				.path("/turma/{id}").buildAndExpand(turma.getId()).toUri()).body(new TurmaDTOResponse(turma));
 	}
 
 }
