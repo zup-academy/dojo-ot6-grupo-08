@@ -37,12 +37,13 @@ public class TurmaController {
 		Optional<Turma> turmaOptionalNome = repository.findByNome(turma.getNome());
 		Optional<Turma> turmaOptionalIniciaEm = repository.findByIniciaEm(turma.getIniciaEm());
 		
-		if (turmaOptional.isPresent() ) {
+		if (turmaOptionalNome.isPresent() || turmaOptionalIniciaEm.isPresent() ) {
 			return ResponseEntity.badRequest().build();
 		}
 		
 		repository.save(turma);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.created(builder
+				.path("/turma/{id}").buildAndExpand(turma.getId()).toUri()).body(turma);
 	}
 
 }
